@@ -17,7 +17,6 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class ErrorActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
-    String Interstitial_Ad_Unit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

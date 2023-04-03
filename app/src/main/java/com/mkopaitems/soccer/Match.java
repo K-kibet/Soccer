@@ -1,8 +1,8 @@
 package com.mkopaitems.soccer;
 public class Match {
-    private String homeTeam;
-    private String awayTeam;
-    private String cupImage;
+    private final String homeTeam;
+    private final String awayTeam;
+    private final String cupImage;
     private String score;
 
 

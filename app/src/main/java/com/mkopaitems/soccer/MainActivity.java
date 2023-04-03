@@ -3,7 +3,6 @@ package com.mkopaitems.soccer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -18,11 +17,9 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
-    private AdView adView;
     private FrameLayout adViewContainer;
     BottomNavigationView bottomNavigationView;
     @Override
@@ -32,35 +29,28 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         adViewContainer = findViewById(R.id.adViewContainer);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        fragment = new HomeFragment();
-                        break;
-                    case R.id.livescores:
-                        fragment = new LivescoresFragment();
-                        break;
-                    case R.id.leagues:
-                        fragment = new LeaguesFragment();
-                        break;
-                    case R.id.fixtures:
-                        fragment = new FixturesFragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                return false;
-            }
-        });
 
-        adViewContainer.post(new Runnable() {
-            @Override
-            public void run() {
-                LoadBanner();
+        adViewContainer.post(this::LoadBanner);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            switch (item.getItemId()) {
+                case R.id.home:
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.livescores:
+                    fragment = new LivescoresFragment();
+                    break;
+                case R.id.leagues:
+                    fragment = new LeaguesFragment();
+                    break;
+                case R.id.fixtures:
+                    fragment = new FixturesFragment();
+                    break;
             }
+            assert fragment != null;
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            return false;
         });
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -78,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void LoadBanner() {
-        adView = new AdView(this);
+        AdView adView = new AdView(this);
         adView.setAdUnitId(getString(R.string.Banner_Ad_Unit));
         adViewContainer.removeAllViews();
         adViewContainer.addView(adView);

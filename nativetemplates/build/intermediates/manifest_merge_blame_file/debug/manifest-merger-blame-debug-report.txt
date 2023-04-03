@@ -2,7 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.google.android.ads.nativetemplates" >
 4
-5    <uses-sdk android:minSdkVersion="16" />
+5    <uses-sdk android:minSdkVersion="24" />
 5-->C:\Users\Lenovo\AndroidStudioProjects\Soccer\nativetemplates\src\main\AndroidManifest.xml
 6
 7    <application android:supportsRtl="true" >

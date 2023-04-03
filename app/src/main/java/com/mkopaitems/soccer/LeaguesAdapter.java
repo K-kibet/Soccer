@@ -23,8 +23,8 @@ import java.util.List;
 
 public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.ViewHolder> {
     private  boolean bool = true;
-    private Context context;
-    private List<League> competitionList;
+    private final Context context;
+    private final List<League> competitionList;
     private InterstitialAd mInterstitialAd;
 
     public LeaguesAdapter(Context context, List<League> list) {
@@ -55,7 +55,7 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.ViewHold
                     });
             this.bool = false;
         }
-        return new ViewHolder (view);
+        return new ViewHolder(view);
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -63,15 +63,12 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.ViewHold
         holder.leagueName.setText(league.getLeagueName());
         holder.leagueArena.setText(league.getLeagueArena());
         Picasso.get().load(league.getLeagueImage()).placeholder(R.drawable.ic_epl_banner).error(R.drawable.ic_epl_banner).into(holder.competitionImage);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(LeaguesAdapter.this.mInterstitialAd != null) {
-                    LeaguesAdapter.this.mInterstitialAd.show((Activity) LeaguesAdapter.this.context);
-                }
-                Intent fixturesIntent = new Intent(LeaguesAdapter.this.context, LivestreamActivity.class);
-                LeaguesAdapter.this.context.startActivity(fixturesIntent);
+        holder.itemView.setOnClickListener(view -> {
+            if(LeaguesAdapter.this.mInterstitialAd != null) {
+                LeaguesAdapter.this.mInterstitialAd.show((Activity) LeaguesAdapter.this.context);
             }
+            Intent fixturesIntent = new Intent(LeaguesAdapter.this.context, LivestreamActivity.class);
+            LeaguesAdapter.this.context.startActivity(fixturesIntent);
         });
 
     }
@@ -80,10 +77,10 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.ViewHold
         return this.competitionList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView leagueName;
-        private TextView leagueArena;
-        private ImageView competitionImage;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView leagueName;
+        private final TextView leagueArena;
+        private final ImageView competitionImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,10 +1,10 @@
 package com.mkopaitems.soccer;
 
 public class League {
-    private String leagueName;
-    private String leagueArena;
-    private String leagueId;
-    private String leagueImage;
+    private final String leagueName;
+    private final String leagueArena;
+    private final String leagueId;
+    private final String leagueImage;
 
     public League(String name, String arena, String id, String leagueImage) {
         this.leagueName = name;
@@ -18,10 +18,6 @@ public class League {
 
     public String getLeagueArena() {
         return leagueArena;
-    }
-
-    public String getLeagueId() {
-        return leagueId;
     }
     public String getLeagueImage() {
         return leagueImage;

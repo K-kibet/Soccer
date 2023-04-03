@@ -1,14 +1,13 @@
 package com.mkopaitems.soccer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
@@ -20,12 +19,9 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.ads.nativead.NativeAd;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 public class StartActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
-    private AdView adView;
     private FrameLayout adViewContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +33,11 @@ public class StartActivity extends AppCompatActivity {
         TemplateView nativeAdView = findViewById(R.id.nativeAdView);
         adViewContainer = findViewById(R.id.adViewContainer);
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareApp();
-            }
-        });
+        btnShare.setOnClickListener(view -> shareApp());
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dealsIntent = new Intent(StartActivity.this, MainActivity.class);
-                startActivity(dealsIntent);
-            }
+        btnStart.setOnClickListener(view -> {
+            Intent dealsIntent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(dealsIntent);
         });
 
         MobileAds.initialize(this);
@@ -66,20 +54,9 @@ public class StartActivity extends AppCompatActivity {
                     }
                 });
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.Native_Ad_Unit))
-                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
-                    @Override
-                    public void onNativeAdLoaded(NativeAd nativeAd) {
-                        nativeAdView.setNativeAd(nativeAd);
-                    }
-                }).build();
+                .forNativeAd(nativeAdView::setNativeAd).build();
         adLoader.loadAd(new AdRequest.Builder().build());
-
-        adViewContainer.post(new Runnable() {
-            @Override
-            public void run() {
-                LoadBanner();
-            }
-        });
+        adViewContainer.post(this::LoadBanner);
     }
 
     private void shareApp() {
@@ -94,7 +71,7 @@ public class StartActivity extends AppCompatActivity {
         startActivity(shareIntent);
     }
     private void LoadBanner() {
-        adView = new AdView(this);
+        AdView adView = new AdView(this);
         adView.setAdUnitId(getString(R.string.Banner_Ad_Unit));
         adViewContainer.removeAllViews();
         adViewContainer.addView(adView);

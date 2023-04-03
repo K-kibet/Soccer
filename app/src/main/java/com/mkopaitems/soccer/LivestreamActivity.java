@@ -16,7 +16,6 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.ads.nativead.NativeAd;
 
 public class LivestreamActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
@@ -61,12 +60,7 @@ public class LivestreamActivity extends AppCompatActivity {
                     }
                 });
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.Native_Ad_Unit))
-                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
-                    @Override
-                    public void onNativeAdLoaded(NativeAd nativeAd) {
-                        nativeAdView.setNativeAd(nativeAd);
-                    }
-                }).build();
+                .forNativeAd(nativeAd -> nativeAdView.setNativeAd(nativeAd)).build();
         adLoader.loadAd(new AdRequest.Builder().build());
     }
 

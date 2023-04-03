@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Live Soccer</string>
-    <string name="Admob_App_Id">ca-app-pub-3545991748919741~7425320954</string>
-    <string name="Interstitial_Ad_Unit">ca-app-pub-3545991748919741/8864764824</string>
-    <string name="Banner_Ad_Unit">ca-app-pub-3545991748919741/1948836837</string>
-    <string name="Native_Ad_Unit">ca-app-pub-3545991748919741/1398968653</string>
+    <string name="Admob_App_Id">ca-app-pub-2583214494360788~4365075905</string>
+    <string name="Interstitial_Ad_Unit">ca-app-pub-2583214494360788/7445254833</string>
+    <string name="Banner_Ad_Unit">ca-app-pub-2583214494360788/1334555325</string>
+    <string name="Native_Ad_Unit">ca-app-pub-2583214494360788/7253683144</string>
 </resources>

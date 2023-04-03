@@ -10,28 +10,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.ads.mediation.UnifiedNativeAdMapper;
-import com.google.android.gms.ads.nativead.NativeAd;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 public class FixturesAdapter extends RecyclerView.Adapter<FixturesAdapter.ViewHolder> {
     private  boolean bool = true;
-    private Context context;
-    private List<Match> matchList;
+    private final Context context;
+    private final List<Match> matchList;
     private InterstitialAd mInterstitialAd;
     public FixturesAdapter(Context context, List<Match> list) {
         this.context = context;
@@ -69,19 +63,16 @@ public class FixturesAdapter extends RecyclerView.Adapter<FixturesAdapter.ViewHo
         holder.textHome.setText(match.getHomeTeam());
         holder.textAway.setText(match.getAwayTeam());
         holder.textResults.setText(match.getScore());
-        if(match.getScore() == "?-?") {
+        if(Objects.equals(match.getScore(), "?-?")) {
             holder.duration.setText("Upcoming");
         }
         Picasso.get().load(match.getCupImage()).placeholder(R.drawable.ic_football).error(R.drawable.ic_football).into(holder.imageCup);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(FixturesAdapter.this.mInterstitialAd != null) {
-                    FixturesAdapter.this.mInterstitialAd.show((Activity) FixturesAdapter.this.context);
-                }
-                Intent fixturesIntent = new Intent(FixturesAdapter.this.context, LivestreamActivity.class);
-                FixturesAdapter.this.context.startActivity(fixturesIntent);
+        holder.itemView.setOnClickListener(view -> {
+            if(FixturesAdapter.this.mInterstitialAd != null) {
+                FixturesAdapter.this.mInterstitialAd.show((Activity) FixturesAdapter.this.context);
             }
+            Intent fixturesIntent = new Intent(FixturesAdapter.this.context, LivestreamActivity.class);
+            FixturesAdapter.this.context.startActivity(fixturesIntent);
         });
 
     }
@@ -89,12 +80,12 @@ public class FixturesAdapter extends RecyclerView.Adapter<FixturesAdapter.ViewHo
     public int getItemCount() {
         return this.matchList.size();
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textHome;
-        private TextView textAway;
-        private TextView textResults;
-        private TextView duration;
-        private ImageView imageCup;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textHome;
+        private final TextView textAway;
+        private final TextView textResults;
+        private final TextView duration;
+        private final ImageView imageCup;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
