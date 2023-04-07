@@ -63,8 +63,9 @@ public class FixturesAdapter extends RecyclerView.Adapter<FixturesAdapter.ViewHo
         holder.textHome.setText(match.getHomeTeam());
         holder.textAway.setText(match.getAwayTeam());
         holder.textResults.setText(match.getScore());
-        if(Objects.equals(match.getScore(), "?-?")) {
-            holder.duration.setText("Upcoming");
+        holder.duration.setText(match.getDate().split("T")[1].split(":00Z")[0]);
+        if(!Objects.equals(match.getScore(), "?-?")) {
+            holder.duration.setText("FT");
         }
         Picasso.get().load(match.getCupImage()).placeholder(R.drawable.ic_football).error(R.drawable.ic_football).into(holder.imageCup);
         holder.itemView.setOnClickListener(view -> {

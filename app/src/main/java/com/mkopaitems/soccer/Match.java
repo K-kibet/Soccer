@@ -4,13 +4,15 @@ public class Match {
     private final String awayTeam;
     private final String cupImage;
     private String score;
+    private final String date;
 
 
-    public Match(String homeTeam, String awayTeam, String cupImage, String score) {
+    public Match(String homeTeam, String awayTeam, String cupImage, String score,String date) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.cupImage = cupImage;
         this.score = score;
+        this.date = date;
     }
 
     public String getHomeTeam() {
@@ -25,6 +27,10 @@ public class Match {
     }
     public String getScore() {
         return score;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setScore(String score) {

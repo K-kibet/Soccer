@@ -80,7 +80,8 @@ public class LivescoresFragment extends Fragment {
                             Match match = new Match(jsonObject.getJSONObject("homeTeam").getString("shortName"),
                                     jsonObject.getJSONObject("awayTeam").getString("shortName"),
                                     jsonObject.getJSONObject("competition").getString("emblem"),
-                                    jsonObject.getJSONObject("score").getJSONObject("fullTime").getString("home") + "-"+ jsonObject.getJSONObject("score").getJSONObject("fullTime").getString("away"));
+                                    jsonObject.getJSONObject("score").getJSONObject("fullTime").getString("home") + "-"+ jsonObject.getJSONObject("score").getJSONObject("fullTime").getString("away"),
+                                    jsonObject.getString("utcDate"));
                             if(jsonObject.getJSONObject("score").getJSONObject("fullTime").getString("home").equals("null")) {
                                 match.setScore("?-?");
                             }
