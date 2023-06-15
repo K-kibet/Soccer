@@ -33,6 +33,7 @@
                 android:layout_gravity="center"
                 android:foregroundGravity="center"
                 android:scaleType="fitCenter"
+                android:padding="5dp"
                 android:src="@drawable/ic_football" />
         </LinearLayout>
         <LinearLayout

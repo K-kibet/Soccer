@@ -18,13 +18,14 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class LivestreamActivity extends AppCompatActivity {
-    InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd;
+    private TemplateView nativeAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_livestream);
         CardView cardLivestream = findViewById(R.id.cardLivestream);
-        TemplateView nativeAdView = findViewById(R.id.nativeAdView);
+        nativeAdView = findViewById(R.id.nativeAdView);
 
         cardLivestream.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,27 +61,7 @@ public class LivestreamActivity extends AppCompatActivity {
                     }
                 });
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.Native_Ad_Unit))
-                .forNativeAd(nativeAd -> nativeAdView.setNativeAd(nativeAd)).build();
+                .forNativeAd(nativeAdView::setNativeAd).build();
         adLoader.loadAd(new AdRequest.Builder().build());
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mInterstitialAd != null) {
-            mInterstitialAd.show(LivestreamActivity.this);
-
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    mInterstitialAd = null;
-                    finish();
-                }
-            });
-        } else {
-            finish();
-        }
     }
 }

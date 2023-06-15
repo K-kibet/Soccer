@@ -1,17 +1,13 @@
 package com.mkopaitems.soccer;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
@@ -19,21 +15,29 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    InterstitialAd mInterstitialAd;
-    private FrameLayout adViewContainer;
-    BottomNavigationView bottomNavigationView;
+    private InterstitialAd mInterstitialAd;
+    private BottomNavigationView bottomNavigationView;
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        adViewContainer = findViewById(R.id.adViewContainer);
 
-        adViewContainer.post(this::LoadBanner);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(this);
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        super.onAdDismissedFullScreenContent();
+                        mInterstitialAd = null;
+                    }
+                });
+            }
             switch (item.getItemId()) {
                 case R.id.home:
                     fragment = new HomeFragment();
@@ -65,49 +69,5 @@ public class MainActivity extends AppCompatActivity {
                         mInterstitialAd = null;
                     }
                 });
-    }
-
-    private void LoadBanner() {
-        AdView adView = new AdView(this);
-        adView.setAdUnitId(getString(R.string.Banner_Ad_Unit));
-        adViewContainer.removeAllViews();
-        adViewContainer.addView(adView);
-
-        AdSize adSize = getAdSize();
-        adView.setAdSize(adSize);
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        adView.loadAd(adRequest);
-    }
-
-    private AdSize getAdSize() {
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-
-        float widthPixels = outMetrics.widthPixels;
-        float density = outMetrics.density;
-        int adWidth = (int) (widthPixels / density);
-
-        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mInterstitialAd != null) {
-            mInterstitialAd.show(MainActivity.this);
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    mInterstitialAd = null;
-                    finish();
-                }
-            });
-        } else {
-            finish();
-        }
     }
 }

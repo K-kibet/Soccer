@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Live Football HD Stream Scores</string>
-    <string name="Admob_App_Id">ca-app-pub-2583214494360788~4365075905</string><!-- replace last 0 with 5 -->
-    <string name="Interstitial_Ad_Unit">ca-app-pub-2583214494360788/7445254830</string><!-- replace last 0 with 3 -->
-    <string name="Banner_Ad_Unit">ca-app-pub-2583214494360788/1334555320</string><!-- replace last 0 with 5 -->
-    <string name="Native_Ad_Unit">ca-app-pub-2583214494360788/7253683140</string><!-- replace last 0 with 4 -->
+    <string name="app_name">Football Live Soccer HD</string>
+    <string name="Admob_App_Id">ca-app-pub-2583214494360788~2424639048</string>
+    <string name="Interstitial_Ad_Unit">ca-app-pub-2583214494360788/3354577332</string>
+    <string name="Banner_Ad_Unit">ca-app-pub-2583214494360788/9919985680</string>
+    <string name="Native_Ad_Unit">ca-app-pub-2583214494360788/5110550126</string>
+    <string name="no_matches_found">No Matches Found! Try Again Later</string>
+    <string name="no_leagues_found">No Leagues Found! Try Again Later</string>
 </resources>

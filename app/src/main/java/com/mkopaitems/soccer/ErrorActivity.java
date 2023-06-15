@@ -25,30 +25,12 @@ public class ErrorActivity extends AppCompatActivity {
         Button btnOk = findViewById(R.id.btnOk);
         Button btnReload = findViewById(R.id.btnReload);
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mInterstitialAd != null) {
-                    mInterstitialAd.show(ErrorActivity.this);
-
-                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                        @Override
-                        public void onAdDismissedFullScreenContent() {
-                            super.onAdDismissedFullScreenContent();
-                            mInterstitialAd = null;
-                            finish();
-                        }
-                    });
-                } else {
-                    finish();
-                }
-            }
-        });
+        btnOk.setOnClickListener(v -> finish());
 
         btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent reloadIntent = new Intent(ErrorActivity.this, ErrorActivity.class);
+                Intent reloadIntent = new Intent( ErrorActivity.this, ErrorActivity.class);
                 if (mInterstitialAd != null) {
                     mInterstitialAd.show(ErrorActivity.this);
                     mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
@@ -79,23 +61,4 @@ public class ErrorActivity extends AppCompatActivity {
                 });
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mInterstitialAd != null) {
-            mInterstitialAd.show(ErrorActivity.this);
-
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    mInterstitialAd = null;
-                    finish();
-                }
-            });
-        } else {
-            finish();
-        }
-    }
 }

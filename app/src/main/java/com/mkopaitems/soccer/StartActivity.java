@@ -21,8 +21,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.button.MaterialButton;
 public class StartActivity extends AppCompatActivity {
-    InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd;
     private FrameLayout adViewContainer;
+    private TemplateView nativeAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +31,26 @@ public class StartActivity extends AppCompatActivity {
 
         MaterialButton btnShare = findViewById(R.id.btnShare);
         MaterialButton btnStart = findViewById(R.id.btnStart);
-        TemplateView nativeAdView = findViewById(R.id.nativeAdView);
+        nativeAdView = findViewById(R.id.nativeAdView);
         adViewContainer = findViewById(R.id.adViewContainer);
 
         btnShare.setOnClickListener(view -> shareApp());
 
         btnStart.setOnClickListener(view -> {
-            Intent dealsIntent = new Intent(StartActivity.this, MainActivity.class);
-            startActivity(dealsIntent);
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(StartActivity.this);
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        super.onAdDismissedFullScreenContent();
+                        mInterstitialAd = null;
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                startActivity(intent);
+            }
         });
 
         MobileAds.initialize(this);
@@ -53,10 +66,10 @@ public class StartActivity extends AppCompatActivity {
                         mInterstitialAd = null;
                     }
                 });
+        adViewContainer.post(this::LoadBanner);
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.Native_Ad_Unit))
                 .forNativeAd(nativeAdView::setNativeAd).build();
         adLoader.loadAd(new AdRequest.Builder().build());
-        adViewContainer.post(this::LoadBanner);
     }
 
     private void shareApp() {
@@ -94,23 +107,5 @@ public class StartActivity extends AppCompatActivity {
         int adWidth = (int) (widthPixels / density);
 
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mInterstitialAd != null) {
-            mInterstitialAd.show(StartActivity.this);
-
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    finish();
-                }
-            });
-        } else {
-            finish();
-        }
     }
 }

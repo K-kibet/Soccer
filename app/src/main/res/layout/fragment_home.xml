@@ -6,12 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     tools:context=".HomeFragment">
+    <FrameLayout
+        android:id="@+id/adViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLivestream"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:layout_below="@id/adViewContainer">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,7 +25,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:src="@drawable/livestream_img"
+                android:src="@drawable/soccer_flyer"
                 android:scaleType="centerCrop" />
             <TextView
                 android:layout_width="match_parent"
