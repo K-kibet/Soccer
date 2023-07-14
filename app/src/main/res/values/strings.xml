@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Football Live Soccer HD</string>
-    <string name="Admob_App_Id">ca-app-pub-2583214494360788~2424639048</string>
+    <string name="Admob_App_Id">ca-app-pub-2583214494360788~24246390480</string>
     <string name="Interstitial_Ad_Unit">ca-app-pub-2583214494360788/3354577332</string>
     <string name="Banner_Ad_Unit">ca-app-pub-2583214494360788/9919985680</string>
     <string name="Native_Ad_Unit">ca-app-pub-2583214494360788/5110550126</string>
